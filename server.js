@@ -13,10 +13,26 @@ const PORT = process.env.PORT || 5000;
 
 connectDB();
 
-app.use(cors({
-  origin: true,
-  credentials: true
-}));
+const allowedOrigins = [
+  "https://apna-college-frontend-ten.vercel.app/login", // Vite frontend
+  "http://localhost:5174/dashboard",
+];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps, curl, Postman)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      } else {
+        return callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 app.use(cookieParser());
