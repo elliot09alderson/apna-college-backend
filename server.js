@@ -1,10 +1,10 @@
-import express from 'express';
-import cors from 'cors';
-import cookieParser from 'cookie-parser';
-import dotenv from 'dotenv';
-import connectDB from './config/database.js';
-import authRoutes from './routes/authRoutes.js';
-import topicRoutes from './routes/topicRoutes.js';
+import express from "express";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import dotenv from "dotenv";
+import connectDB from "./config/database.js";
+import authRoutes from "./routes/authRoutes.js";
+import topicRoutes from "./routes/topicRoutes.js";
 
 dotenv.config();
 
@@ -14,8 +14,8 @@ const PORT = process.env.PORT || 5000;
 connectDB();
 
 const allowedOrigins = [
-  "https://apna-college-frontend-ten.vercel.app/login", // Vite frontend
-  "http://localhost:5174/dashboard",
+  "https://apna-college-frontend-ten.vercel.app", // Vite frontend
+  "http://localhost:5174",
 ];
 
 app.use(
@@ -37,11 +37,11 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/api/auth', authRoutes);
-app.use('/api/topics', topicRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/topics", topicRoutes);
 
-app.get('/api/health', (req, res) => {
-  res.json({ message: 'Server is running!' });
+app.get("/api/health", (req, res) => {
+  res.json({ message: "Server is running!" });
 });
 
 app.listen(PORT, () => {
